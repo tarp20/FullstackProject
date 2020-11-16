@@ -1,7 +1,10 @@
 
-from django.urls import path
-from .views import all_cars
 
-urlpatterns = [
-    path('cars/',all_cars,)
-]
+
+from rest_framework.routers import DefaultRouter
+from core.views import CarViewSet
+
+router=DefaultRouter()
+router.register('cars', CarViewSet)
+
+urlpatterns = router.urls

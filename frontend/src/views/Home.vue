@@ -44,6 +44,8 @@
 
 <script>
 
+const host = process.env.VUE_APP_BACKEND_HOST || 'http://127.0.0.1:8000';
+
 export default {
   name: 'Home',
   data() {
@@ -60,7 +62,7 @@ export default {
     this.fetchCars();
   },
   methods: {
-    async fetchCars(url = 'http://127.0.0.1:8000/api/cars/') {
+    async fetchCars(url = `${host}/api/cars/`) {
       const response = await fetch(url);
       const { results, next, previous } = await response.json();
       this.cars = results;
@@ -68,7 +70,7 @@ export default {
       this.prevPage = previous;
     },
     async createCar() {
-      const response = await fetch('http://127.0.0.1:8000/api/cars/',
+      const response = await fetch(`${host}/api/cars/`,
         {
           method: 'POST',
           headers: {
@@ -85,7 +87,7 @@ export default {
     },
     async removeCar(car) {
       const { id } = car;
-      const response = await fetch(`http://127.0.0.1:8000/api/cars/${id}/`,
+      const response = await fetch(`${host}/api/cars/${id}/`,
         {
           method: 'DELETE',
           headers: {
@@ -106,7 +108,7 @@ export default {
     },
     async filterCars() {
       const filledFilters = this.filters.filter(({ key, value }) => key && value);
-      const url = new URL('http://127.0.0.1:8000/api/cars/');
+      const url = new URL(`${host}/api/cars/`);
       filledFilters.forEach(({ key, value }) => url.searchParams.append(key, value));
       await this.fetchCars(url);
     },

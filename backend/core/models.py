@@ -12,3 +12,4 @@ class Car(models.Model):
         unique_together = [
             ('vendor','model','year'),
         ]
+
